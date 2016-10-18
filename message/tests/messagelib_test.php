@@ -68,14 +68,18 @@ class core_message_messagelib_testcase extends advanced_testcase {
     protected function send_fake_message($userfrom, $userto, $message = 'Hello world!', $notification = 0) {
         global $DB;
 
+        static $time = 1;
+
         $record = new stdClass();
         $record->useridfrom = $userfrom->id;
         $record->useridto = $userto->id;
         $record->subject = 'No subject';
         $record->fullmessage = $message;
         $record->smallmessage = $message;
-        $record->timecreated = time();
+        $record->timecreated = $time;
         $record->notification = $notification;
+
+        $time++;
 
         return $DB->insert_record('message', $record);
     }
